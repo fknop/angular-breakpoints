@@ -1,4 +1,4 @@
-[![NPM Version](https://img.shields.io/npm/v/angular-breakpoints.svg)](https://npmjs/org/package/angular-breakpoints)
+[![NPM Version](https://img.shields.io/npm/v/angular-breakpoints.svg)](https://npmjs.com/package/angular-breakpoints)
 
 # angular-breakpoints
 
