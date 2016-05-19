@@ -1,0 +1,41 @@
+{
+  "name": "angular-breakpoints",
+  "version": "1.0.0",
+  "description": "Angular 2 service to programmatically listen to breakpoints",
+  "main": "index.js",
+  "scripts": {
+    "test": "",
+    "tsc": "node_modules/.bin/tsc -p .",
+    "typings": "node_modules/.bin/typings",
+    "typings-install": "npm run typings install",
+    "prepublish": "npm run typings-install && npm run tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fknop/angular-breakpoints.git"
+  },
+  "keywords": [
+    "ng2",
+    "ng",
+    "angular",
+    "angular2",
+    "angular 2",
+    "angularjs",
+    "angular.js",
+    "breakpoints",
+    "css",
+    "service"
+  ],
+  "author": "Florian Knop",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fknop/angular-breakpoints/issues"
+  },
+  "homepage": "https://github.com/fknop/angular-breakpoints#readme",
+  "devDependencies": {
+    "@angular/core": "^2.0.0-rc.1",
+    "rxjs": "^5.0.0-beta.6",
+    "typescript": "^1.8.10",
+    "typings": "^1.0.4"
+  }
+}

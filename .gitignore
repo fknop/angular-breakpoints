@@ -1,0 +1,4 @@
+index.js
+*.map
+typings
+node_modules
