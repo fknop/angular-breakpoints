@@ -47,9 +47,9 @@ The `changes` property is an instance of `RxJS Observable`. It will gives you th
 
 ### BreakpointEvent interface
 
-* name: name of the breakpoint
-* breakpoint: value of the breakpoint (min and max)
-* currentSize: the current size of the window (width and height)
+* `name`: name of the breakpoint
+* `breakpoint`: value of the breakpoint (min and max)
+* `currentSize`: the current size of the window (width and height)
 
 
 ### Customize breakpoints
@@ -59,10 +59,10 @@ The defaults breakpoints are the `Twitter Bootstrap` breakpoints.
 ```
 
 const defaultBreakpoints: BreakpointConfig = {
-    'xs': { max: 768 },
-    'sm': { min: 768, max: 992 },
-    'md': { min: 992, max: 1200 },
-    'lg': { min: 1200 }
+    xs: { max: 768 },
+    sm: { min: 768, max: 992 },
+    md: { min: 992, max: 1200 },
+    lg: { min: 1200 }
 };
 
 ```
