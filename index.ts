@@ -1,4 +1,4 @@
-import { Injectable, provide } from '@angular/core';
+import { Injectable, provide, NgZone } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Subscription } from 'rxjs/Subscription';
@@ -41,7 +41,13 @@ const FALLBACK_BREAKPOINT = {
 
 export const breakpointsProvider = function (breakpoints?: BreakpointConfig) {
     
-    return provide(BreakpointsService, { useValue: new BreakpointsService(breakpoints) });
+    return provide(BreakpointsService, { 
+        useFactory (ngZone) {
+            
+            return new BreakpointsService(ngZone, breakpoints)
+        },
+        deps: [NgZone]
+    });
 }
 
 
@@ -55,7 +61,7 @@ export class BreakpointsService  {
     changes: Observable<BreakpointEvent>;
     resize: Observable<WindowSize>;
     
-    constructor (breakpoints?: BreakpointConfig) {
+    constructor (private ngZone, breakpoints?: BreakpointConfig) {
         
         this.setBreakpoints(breakpoints);
         
@@ -86,7 +92,16 @@ export class BreakpointsService  {
         this.subscription = this.resize.subscribe((size: WindowSize) => {
             
             const breakpoint: string = this.getBreakpoint(size.width);
-            this.changesSubject.next(this.getBreakpointEvent(breakpoint));
+            
+            if (NgZone.isInAngularZone()) {
+                this.changesSubject.next(this.getBreakpointEvent(breakpoint));
+            }
+            else {
+                // NgZone doesnt listen to resize window event, so we have to run this in NgZone to run change detection
+                this.ngZone.run(() => {
+                    this.changesSubject.next(this.getBreakpointEvent(breakpoint));
+                });
+            }
         });
     }
     
