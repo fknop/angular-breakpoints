@@ -97,3 +97,6 @@ providers: [breakpointsProvider(breakpointConfig)]
 The service subscribes to the resize event when created.
 If you want to temporarily unsubscribe to the resize event, just call the `unsubscribe` method.
 If you want to resubscribe, call the `subscribe` method.
+
+The methods exist but the resize event does not run in `NgZone` so it will not trigger change detection. 
+Thus, the performance should not be affected. 
