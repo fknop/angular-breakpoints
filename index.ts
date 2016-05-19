@@ -67,6 +67,7 @@ export class BreakpointsService  {
         this.subscribe();
     }
 
+    // Unsubscribe to the resize event
     public unsubscribe () {
         
         if (this.subscription) {
@@ -75,6 +76,7 @@ export class BreakpointsService  {
         }
     }    
     
+    // Subscribe to the resize event
     public subscribe () {
         
         if (this.subscription) {
@@ -88,6 +90,7 @@ export class BreakpointsService  {
         });
     }
     
+    // Sets the customized breakpoints
     private setBreakpoints (breakpoints?: BreakpointConfig) {
         
         if (breakpoints) {
@@ -95,6 +98,8 @@ export class BreakpointsService  {
         }
     }
     
+    
+    // Returns a breakpoint event, with the fallback breakpoint if none were found
     private getBreakpointEvent (name: string): BreakpointEvent {
         
         if (!name) {
@@ -105,11 +110,14 @@ export class BreakpointsService  {
         }
     }
     
+    // Returns the current window size
     private getWindowSize (): WindowSize {
         
         return { width: window.innerWidth, height: window.innerHeight };
     }
     
+    
+    // Returns the first breakpoint that match the current size
     private getBreakpoint (currentSize: number): string {
         
         const keys = Object.keys(this.breakpoints);
