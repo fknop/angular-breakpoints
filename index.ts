@@ -54,6 +54,7 @@ export const breakpointsProvider = function (breakpoints?: BreakpointConfig) {
 @Injectable()
 export class BreakpointsService  {
     
+    private lastBreakpoint: string = null;
     private breakpoints: BreakpointConfig = defaultBreakpoints;
     private changesSubject: BehaviorSubject<BreakpointEvent>;
     private subscription: Subscription;
@@ -89,20 +90,26 @@ export class BreakpointsService  {
             return;
         }
         
-        this.subscription = this.resize.subscribe((size: WindowSize) => {
+        // Make sure resize event doesn't trigger change detection by running outside of angular zone
+        this.ngZone.runOutsideAngular(() => {
             
-            const breakpoint: string = this.getBreakpoint(size.width);
-            
-            if (NgZone.isInAngularZone()) {
-                this.changesSubject.next(this.getBreakpointEvent(breakpoint));
-            }
-            else {
-                // NgZone doesnt listen to resize window event, so we have to run this in NgZone to run change detection
+            this.subscription = this.resize.subscribe((size: WindowSize) => {
+                
+                const breakpoint: string = this.getBreakpoint(size.width);
+                
+                if (breakpoint === this.lastBreakpoint) {
+                    return;
+                }
+                
+                this.lastBreakpoint = breakpoint;
+                
+                // Emitting back in angular zone
                 this.ngZone.run(() => {
                     this.changesSubject.next(this.getBreakpointEvent(breakpoint));
                 });
-            }
+            });
         });
+        
     }
     
     // Sets the customized breakpoints
