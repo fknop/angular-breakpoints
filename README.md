@@ -2,7 +2,7 @@
 
 `angular-breakpoints` is a little angular service to listen programmatically to breakpoints.
 
-It works with ´RxJS`.
+It works with `RxJS`.
 
 ## Install
 
