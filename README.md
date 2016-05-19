@@ -1,4 +1,7 @@
+[![NPM Version](https://img.shields.io/npm/v/angular-breakpoints.svg)](https://npmjs/org/package/angular-breakpoints)
+
 # angular-breakpoints
+
 
 `angular-breakpoints` is a little angular service to listen programmatically to breakpoints.
 
