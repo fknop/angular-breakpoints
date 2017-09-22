@@ -1,4 +1,4 @@
-import { Injectable, provide, NgZone } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Subscription } from 'rxjs/Subscription';
@@ -41,13 +41,11 @@ const FALLBACK_BREAKPOINT = {
 
 export const breakpointsProvider = function (breakpoints?: BreakpointConfig) {
     
-    return provide(BreakpointsService, { 
-        useFactory (ngZone) {
-            
-            return new BreakpointsService(ngZone, breakpoints)
-        },
-        deps: [NgZone]
-    });
+    return {
+      provide: BreakpointsService,
+      useFactory: (ngZone) => new BreakpointsService(ngZone, breakpoints),
+      deps: [NgZone]
+    }
 }
 
 
