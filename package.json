@@ -8,7 +8,7 @@
     "tsc": "node_modules/.bin/tsc -p .",
     "typings": "node_modules/.bin/typings",
     "typings-install": "npm run typings install",
-    "prepublish": "npm run typings-install && npm run tsc"
+    "prepare": "npm run tsc"
   },
   "repository": {
     "type": "git",

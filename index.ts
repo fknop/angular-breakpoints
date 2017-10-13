@@ -1,4 +1,4 @@
-import { Injectable, NgZone } from '@angular/core';
+import { Injectable, NgZone, InjectionToken, Provider } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Subscription } from 'rxjs/Subscription';
@@ -28,7 +28,7 @@ export interface BreakpointConfig {
     [name: string]: Breakpoint;
 }
 
-const defaultBreakpoints: BreakpointConfig = {
+export const defaultBreakpoints: BreakpointConfig = {
     xs: { max: 768 },
     sm: { min: 768, max: 992 },
     md: { min: 992, max: 1200 },
@@ -39,13 +39,25 @@ const FALLBACK_BREAKPOINT = {
     min: 0, max: Number.MAX_SAFE_INTEGER
 }
 
-export const breakpointsProvider = function (breakpoints?: BreakpointConfig) {
-    
-    return {
-      provide: BreakpointsService,
-      useFactory: (ngZone) => new BreakpointsService(ngZone, breakpoints),
-      deps: [NgZone]
-    }
+export const BREAKPOINTS_CONFIG = new InjectionToken<BreakpointConfig>('breakpoints.config');
+
+export function breakpointsFactory (ngZone: NgZone, breakpoints: BreakpointConfig) {
+    return new BreakpointsService(ngZone, breakpoints)
+}
+
+
+export function breakpointsProvider (breakpoints: BreakpointConfig = defaultBreakpoints): Provider[] {
+    return [
+        {
+            provide: BREAKPOINTS_CONFIG,
+            useValue: breakpoints
+        },
+        {
+            provide: BreakpointsService,
+            useFactory: breakpointsFactory,
+            deps: [NgZone, BREAKPOINTS_CONFIG]
+        }
+    ];
 }
 
 
